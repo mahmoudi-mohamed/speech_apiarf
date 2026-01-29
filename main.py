@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from piper import PiperVoice
 import wave
@@ -6,6 +7,15 @@ import base64
 import tempfile
 
 app = FastAPI(title="Arabic TTS API")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 # تحميل الموديل
 voice = PiperVoice.load("arabic-emirati-female-model.onnx")
