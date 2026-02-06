@@ -1,0 +1,32 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #f4f4f4; /* Match App background */
+  color: #333; /* Default text color */
+}
+
+h1 {
+  font-size: 2.5em; /* Adjusted for better fit */
+  line-height: 1.1;
+  color: #333;
+}
+
+/* General reset for consistency */
+* {
+  box-sizing: border-box;
+}
