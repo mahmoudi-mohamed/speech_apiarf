@@ -18,7 +18,7 @@ app.add_middleware(
 )
 
 # تحميل الموديل
-voice = PiperVoice.load("arabic-emirati-female-model.onnx")
+voice = PiperVoice.load("my_voice.onnx")
 
 class TextRequest(BaseModel):
     text: str
