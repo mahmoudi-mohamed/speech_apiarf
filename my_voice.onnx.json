@@ -1,0 +1,17 @@
+{
+  "audio": {
+    "sample_rate": 22050,
+    "filter_length": 1024,
+    "hop_length": 256,
+    "win_length": 1024
+  },
+  "inference": {
+    "noise_scale": 0.667,
+    "length_scale": 1.0,
+    "noise_w": 0.8
+  },
+  "espeak": {
+    "voice": "ar"
+  },
+  "phoneme_id_map": {}
+}
