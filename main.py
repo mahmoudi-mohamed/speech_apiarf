@@ -27,8 +27,7 @@ class TextRequest(BaseModel):
 def text_to_speech(request: TextRequest):
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as tmp_wav_file:
         wav_file_path = tmp_wav_file.name
-        with wave.open(wav_file_path, "wb") as wav_file:
-            voice.synthesize_wav(request.text, wav_file)
+        voice.synthesize_wav(request.text, wav_file_path)
 
         with open(wav_file_path, "rb") as f:
             audio_bytes = f.read()
