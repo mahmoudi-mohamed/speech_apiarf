@@ -3,4 +3,6 @@ uvicorn
 torch
 soundfile
 pydantic
-piper-tts
+transformers
+datasets
+accelerate
