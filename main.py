@@ -22,7 +22,7 @@ app.add_middleware(
 )
 
 # تحميل الموديل
-model = VitsModel.from_pretrained("wasmdashai/vits-ar")
+model = VitsModel.from_pretrained("wasmdashai/vits-ar", torch_dtype=torch.float16, device_map="auto")
 tokenizer = AutoTokenizer.from_pretrained("wasmdashai/vits-ar")
 
 class TextRequest(BaseModel):
