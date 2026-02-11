@@ -5,8 +5,8 @@ from pydantic import BaseModel
 import wave
 import base64
 import tempfile
-from transformers import SpeechT5Processor, SpeechT5ForTextToSpeech, SpeechT5HifiGan
-from datasets import load_dataset
+from transformers import VitsModel, AutoTokenizer
+
 import torch
 import soundfile as sf
 
@@ -22,13 +22,8 @@ app.add_middleware(
 )
 
 # تحميل الموديل
-processor = SpeechT5Processor.from_pretrained("microsoft/speecht5_tts")
-model = SpeechT5ForTextToSpeech.from_pretrained("microsoft/speecht5_tts")
-vocoder = SpeechT5HifiGan.from_pretrained("microsoft/speecht5_hifigan")
-
-# load xvector containing speaker embeddings of a lovely male voice
-embeddings_dataset = load_dataset("Matthijs/cmu-arctic-xvectors", split="validation")
-speaker_embeddings = torch.tensor(embeddings_dataset[7306]["xvector"]).unsqueeze(0)
+model = VitsModel.from_pretrained("wasmdashai/vits-ar")
+tokenizer = AutoTokenizer.from_pretrained("wasmdashai/vits-ar")
 
 class TextRequest(BaseModel):
     text: str
@@ -37,9 +32,10 @@ class TextRequest(BaseModel):
 def text_to_speech(request: TextRequest):
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as tmp_wav_file:
         wav_file_path = tmp_wav_file.name
-        inputs = processor(text=request.text, return_tensors="pt")
-        speech = model.generate_speech(inputs["input_ids"], speaker_embeddings, vocoder=vocoder)
-        sf.write(wav_file_path, speech.numpy(), samplerate=16000)
+        inputs = tokenizer(request.text, return_tensors="pt")
+        with torch.no_grad():
+            speech = model(**inputs).waveform
+        sf.write(wav_file_path, speech.numpy(), samplerate=model.config.sampling_rate)
 
         with open(wav_file_path, "rb") as f:
             audio_bytes = f.read()
