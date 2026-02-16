@@ -50,14 +50,14 @@ def text_to_speech(request: TextRequest):
 
     # Phonemize the text
     phonemes_response = pygoruut.phonemize(language="Arabic", sentence=text)
-    phonemes = phonemes_response.phonemes
     
     # Convert phonemes to phoneme IDs
     phoneme_id_map = piper_config["phoneme_id_map"]
     phoneme_ids = []
-    for p in phonemes:
-        if p in phoneme_id_map:
-            phoneme_ids.extend(phoneme_id_map[p])
+    for word in phonemes_response.Words:
+        for p in word.Phonetic: # Iterate over individual phonemes in the phonetic string
+            if p in phoneme_id_map:
+                phoneme_ids.extend(phoneme_id_map[p])
 
     # Add sentence silence
     phoneme_ids.extend(phoneme_id_map["."])
