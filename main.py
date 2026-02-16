@@ -49,7 +49,8 @@ def text_to_speech(request: TextRequest):
     print(f"Received text for TTS: {text}")
 
     # Phonemize the text
-    phonemes = pygoruut.phonemize(language="Arabic", sentence=text)
+    phonemes_response = pygoruut.phonemize(language="Arabic", sentence=text)
+    phonemes = phonemes_response.phonemes
     
     # Convert phonemes to phoneme IDs
     phoneme_id_map = piper_config["phoneme_id_map"]
