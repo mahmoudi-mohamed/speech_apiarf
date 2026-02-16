@@ -59,9 +59,10 @@ def text_to_speech(request: TextRequest):
             if p in phoneme_id_map:
                 phoneme_ids.extend(phoneme_id_map[p])
 
+    print(f"Number of phoneme IDs: {len(phoneme_ids)}")
+
     # Add sentence silence
     phoneme_ids.extend(phoneme_id_map["."])
-
 
     # Run inference
     input_ids = np.array(phoneme_ids, dtype=np.int64).reshape((1, -1))
@@ -77,6 +78,7 @@ def text_to_speech(request: TextRequest):
         },
     )[0]
     
+    print(f"Shape of audio output: {audio.shape}")
     samplerate = piper_config["audio"]["sample_rate"]
 
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as tmp_wav_file:
