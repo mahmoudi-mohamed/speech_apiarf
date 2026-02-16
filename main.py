@@ -51,6 +51,10 @@ def text_to_speech(request: TextRequest):
     # Phonemize the text
     phonemes_response = pygoruut.phonemize(language="Arabic", sentence=text)
     
+    print("Phonemization details:")
+    for word in phonemes_response.Words:
+        print(f"  Word: '{word.CleanWord}', Phonetic: '{word.Phonetic}'")
+
     # Convert phonemes to phoneme IDs
     phoneme_id_map = piper_config["phoneme_id_map"]
     phoneme_ids = []
