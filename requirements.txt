@@ -1,8 +1,7 @@
 fastapi
 uvicorn
-torch
 soundfile
 pydantic
-transformers
-datasets
-accelerate
+onnxruntime
+pygoruut
+numpy
