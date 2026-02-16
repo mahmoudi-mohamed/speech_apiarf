@@ -15,7 +15,6 @@
         "length_scale": 1,
         "noise_w": 0.8
     },
-    "phoneme_type": "pygoruut",
     "phoneme_map": {},
     "phoneme_id_map": {
         "_": [
